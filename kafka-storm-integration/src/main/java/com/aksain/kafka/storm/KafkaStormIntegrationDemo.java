@@ -12,6 +12,8 @@ import org.apache.storm.kafka.ZkHosts;
 import org.apache.storm.spout.SchemeAsMultiScheme;
 import org.apache.storm.topology.TopologyBuilder;
 
+import com.aksain.kafka.storm.bolt.LoggerBolt;
+
 /**
  * @author Amit Kumar
  *

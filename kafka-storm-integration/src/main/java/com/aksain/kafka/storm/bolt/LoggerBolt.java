@@ -1,4 +1,4 @@
-package com.aksain.kafka.storm;
+package com.aksain.kafka.storm.bolt;
 
 import org.apache.log4j.Logger;
 import org.apache.storm.topology.BasicOutputCollector;

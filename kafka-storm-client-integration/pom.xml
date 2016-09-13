@@ -2,41 +2,39 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.aksain.kafka.integrations</groupId>
-	<artifactId>kafka-storm-integration</artifactId>
+	<artifactId>kafka-storm-client-integration</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<name>Kafka Storm Client Integration</name>
+	<description>Integration of Kafka version 0.9 onwards</description>
 
 	<properties>
 		<storm.version>1.0.2</storm.version>
-		<kafka.version>0.8.2.2</kafka.version>
+		<kafka.version>0.10.0.1</kafka.version>
 	</properties>
 
 	<dependencies>
-		<!-- Storm library -->
+		<!-- https://mvnrepository.com/artifact/org.apache.storm/storm-core -->
 		<dependency>
 			<groupId>org.apache.storm</groupId>
 			<artifactId>storm-core</artifactId>
 			<version>${storm.version}</version>
 		</dependency>
-		<!-- Storm-Kafka integration library -->
+		<!-- https://mvnrepository.com/artifact/org.apache.storm/storm-kafka -->
 		<dependency>
 			<groupId>org.apache.storm</groupId>
-			<artifactId>storm-kafka</artifactId>
+			<artifactId>storm-kafka-client</artifactId>
 			<version>${storm.version}</version>
 		</dependency>
-		<!-- Kafka client libraries as Storm-Kafka integration library does not include these -->
+
 		<dependency>
 			<groupId>org.apache.kafka</groupId>
 			<artifactId>kafka_2.11</artifactId>
 			<version>${kafka.version}</version>
 			<exclusions>
-				<!-- Excluded to avoid version issues between Kafka zookeeper api and 
-					Storm-kafka zookeeper api -->
 				<exclusion>
 					<groupId>org.apache.zookeeper</groupId>
 					<artifactId>zookeeper</artifactId>
 				</exclusion>
-				<!-- Excluded to avoid Pre-emptive StackOverflowException due to version/implementation 
-					issues between Kafka slf4j/log4j api and Storm slf4j/log4js api -->
 				<exclusion>
 					<groupId>org.slf4j</groupId>
 					<artifactId>slf4j-log4j12</artifactId>

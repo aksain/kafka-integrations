@@ -1,4 +1,7 @@
-package com.aksain.kafka.storm;
+/**
+ * 
+ */
+package com.aksain.kafka.storm.client;
 
 import java.util.HashMap;
 
@@ -9,32 +12,36 @@ import org.apache.storm.kafka.KafkaSpout;
 import org.apache.storm.kafka.SpoutConfig;
 import org.apache.storm.kafka.StringScheme;
 import org.apache.storm.kafka.ZkHosts;
+import org.apache.storm.kafka.spout.KafkaSpoutConfig;
 import org.apache.storm.spout.SchemeAsMultiScheme;
 import org.apache.storm.topology.TopologyBuilder;
 
 import com.aksain.kafka.storm.bolt.LoggerBolt;
 
 /**
- * @author Amit Kumar
+ * @author amit-kumar
+ *
  */
-public class KafkaStormIntegrationDemo {
+public class KafkaStormClientIntegrationDemo {
 	
-	private static final Logger LOG = Logger.getLogger(KafkaStormIntegrationDemo.class);
+	private static final Logger LOG = Logger.getLogger(KafkaStormClientIntegrationDemo.class);
 
 	public static void main(String[] args) {
-		// Log program usages and exit if there are less than 4 command line arguments
+
 		if(args.length < 4) {
 			LOG.fatal("Incorrect number of arguments. Required arguments: <zk-hosts> <kafka-topic> <zk-path> <clientid>");
 			System.exit(1);
 		}
 		
 		// Build Spout configuration using input command line parameters
-		final BrokerHosts zkrHosts = new ZkHosts(args[0]);
-		final String kafkaTopic = args[1];
-		final String zkRoot = args[2];
-		final String clientId = args[3];
-		final SpoutConfig kafkaConf = new SpoutConfig(zkrHosts, kafkaTopic, zkRoot, clientId);
-		kafkaConf.scheme = new SchemeAsMultiScheme(new StringScheme());
+//		final BrokerHosts zkrHosts = new ZkHosts(args[0]);
+//		final String kafkaTopic = args[1];
+//		final String zkRoot = args[2];
+//		final String clientId = args[3];
+//		final SpoutConfig kafkaConf = new SpoutConfig(zkrHosts, kafkaTopic, zkRoot, clientId);
+//		kafkaConf.scheme = new SchemeAsMultiScheme(new StringScheme());
+//		
+		new KafkaSpoutConfig<String, String>();
 
 		// Build topology to consume message from kafka and print them on console
 		final TopologyBuilder topologyBuilder = new TopologyBuilder();
@@ -46,5 +53,7 @@ public class KafkaStormIntegrationDemo {
 		// Submit topology to local cluster i.e. embedded storm instance in eclipse
 		final LocalCluster localCluster = new LocalCluster();
 		localCluster.submitTopology("kafka-topology", new HashMap<>(), topologyBuilder.createTopology());
+	
 	}
+
 }

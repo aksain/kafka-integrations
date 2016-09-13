@@ -9,6 +9,7 @@ import org.apache.storm.tuple.Tuple;
 
 /**
  * @author Amit Kumar
+ *
  */
 public class LoggerBolt extends BaseBasicBolt{
 	
@@ -23,5 +24,7 @@ public class LoggerBolt extends BaseBasicBolt{
 	@Override
 	public void declareOutputFields(OutputFieldsDeclarer declarer) {
 		declarer.declare(new Fields("message"));
-	}	
+	}
+	
+	
 }

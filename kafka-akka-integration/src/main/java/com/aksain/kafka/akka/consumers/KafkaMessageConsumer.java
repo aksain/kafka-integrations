@@ -10,6 +10,9 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 import java.util.Arrays;
 import java.util.Properties;
 
+/**
+ * @author Amit Kumar
+ */
 public class KafkaMessageConsumer extends Thread {
     public static final String RESPONSE_TOPIC_NAME = "response-topic";
 
@@ -20,7 +23,7 @@ public class KafkaMessageConsumer extends Thread {
         this.responseTopic = topicName;
 
         final Properties properties = new Properties();
-        properties.put("bootstrap.servers", "localhost:9092");
+        properties.put("bootstrap.servers", System.getProperty("kafka.bootstrap.servers", "localhost:9092"));
         properties.put("group.id", topicName);
         properties.put("enable.auto.commit", "true");
         properties.put("auto.commit.interval.ms", "100");
@@ -37,6 +40,7 @@ public class KafkaMessageConsumer extends Thread {
             final ConsumerRecords<String, String> consumerRecords = kafkaConsumer.poll(1000);
             for(ConsumerRecord<String, String> record : consumerRecords.records(responseTopic)) {
                 System.out.println("[Consumer]Received message with key: " + record.key());
+                // Get actor with same name as message key and send message value to it
                 ActorSystemUtils.getRootActor(record.key()).tell(
                         new KafkaResponseActor.KafkaResponse(record.value()),
                         ActorRef.noSender()

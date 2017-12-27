@@ -15,6 +15,9 @@ import java.util.concurrent.TimeoutException;
 
 import static com.aksain.kafka.akka.actors.KafkaResponseActor.KafkaMessageRequest;
 
+/**
+ * @author Amit Kumar
+ */
 public class KafkaRequestResponseDemo {
     public static void main(String[] args) throws TimeoutException {
         // Start Kafka consumer to listen for messages from response queue
@@ -43,11 +46,10 @@ public class KafkaRequestResponseDemo {
         KafkaMessageProducer.getInstance().sendMessage(KafkaMessageProducer.REQUEST_TOPIC_NAME, messageKey, message);
 
         // Wait for Response message from Actor with a configured timeout
-        system.log().info("Message Found: " + inbox.receive(Duration.create(3000, TimeUnit.MILLISECONDS)).equals(message));
+        final long messageWaitTimeout = Long.valueOf(System.getProperty("message.wait.timeout", "3000"));
+        system.log().info("Message Found: " + inbox.receive(Duration.create(messageWaitTimeout, TimeUnit.MILLISECONDS)).equals(message));
 
         // Shutdown Akka Actor System
         system.terminate();
-
-        System.exit(0);
     }
 }
